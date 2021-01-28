@@ -19,7 +19,7 @@
 
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
-#include <pthread.h>
+#include <thread>
 #include <semaphore.h>
 
 #include <string>
@@ -80,7 +80,7 @@ class PandarGeneralSDK {
  private:
   PandarGeneral *pandarGeneral_;
   void *tcp_command_client_;
-  boost::thread *get_calibration_thr_;
+  std::thread *get_calibration_thr_;
   bool enable_get_calibration_thr_;
   bool got_lidar_calibration_;
   std::string correction_content_;

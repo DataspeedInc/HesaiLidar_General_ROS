@@ -100,7 +100,7 @@ public:
     }
     if(m_sPublishType == "both" || m_sPublishType == "raw"){
       packetPublisher.publish(scan);
-      printf("raw size: %d.\n", scan->packets.size());
+      printf("raw size: %lu.\n", scan->packets.size());
     }
   }
 
