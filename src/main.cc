@@ -96,16 +96,16 @@ public:
       sensor_msgs::PointCloud2 output;
       pcl::toROSMsg(*cld, output);
       lidarPublisher.publish(output);
-      printf("timestamp: %f, point size: %ld.\n",timestamp, cld->points.size());
+      ROS_DEBUG("timestamp: %f, point size: %ld.\n",timestamp, cld->points.size());
     }
     if(m_sPublishType == "both" || m_sPublishType == "raw"){
       packetPublisher.publish(scan);
-      printf("raw size: %lu.\n", scan->packets.size());
+      ROS_DEBUG("raw size: %lu.\n", scan->packets.size());
     }
   }
 
   void gpsCallback(int timestamp) {
-    printf("gps: %d\n", timestamp);
+    ROS_DEBUG("gps: %d\n", timestamp);
   }
 
   void scanCallback(const hesai_lidar::PandarScanPtr scan)
