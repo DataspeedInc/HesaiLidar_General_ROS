@@ -61,17 +61,19 @@ public:
       hsdk = new PandarGeneralSDK("", boost::bind(&HesaiLidarClient::lidarCallback, this, _1, _2, _3), \
       static_cast<int>(startAngle * 100 + 0.5), 0, pclDataType, lidarType, frameId, m_sTimestampType);
       if (hsdk != NULL) {
-        ifstream fin(lidarCorrectionFile);
-        int length = 0;
-        std::string strlidarCalibration;
-        fin.seekg(0, std::ios::end);
-        length = fin.tellg();
-        fin.seekg(0, std::ios::beg);
-        char *buffer = new char[length];
-        fin.read(buffer, length);
-        fin.close();
-        strlidarCalibration = buffer;
-        hsdk->LoadLidarCorrectionFile(strlidarCalibration);
+        if (!lidarCorrectionFile.empty()) {
+          ifstream fin(lidarCorrectionFile);
+          int length = 0;
+          std::string strlidarCalibration;
+          fin.seekg(0, std::ios::end);
+          length = fin.tellg();
+          fin.seekg(0, std::ios::beg);
+          char *buffer = new char[length];
+          fin.read(buffer, length);
+          fin.close();
+          strlidarCalibration = buffer;
+          hsdk->LoadLidarCorrectionFile(strlidarCalibration);
+        }
         packetSubscriber = node.subscribe("pandar_packets",10,&HesaiLidarClient::scanCallback, (HesaiLidarClient*)this, ros::TransportHints().tcpNoDelay(true));
       }
     }
